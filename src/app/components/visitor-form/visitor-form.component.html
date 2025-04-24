@@ -1,0 +1,79 @@
+<div class="container py-4">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card shadow border-0">
+        <div class="card-header bg-white py-3">
+          <h3 class="mb-0">
+            <i class="bi bi-person-plus me-2"></i>
+            {{ isEditMode ? 'Edit Customer' : 'Add New Customer' }}
+          </h3>
+        </div>
+        
+        <div class="card-body">
+          <form [formGroup]="visitorForm" (ngSubmit)="onSubmit()" novalidate>
+            <div class="mb-3">
+              <label for="consumerName" class="form-label">Customer Name</label>
+              <input id="consumerName" type="text" formControlName="consumerName" 
+                     class="form-control" 
+                     [ngClass]="{ 'is-invalid': isFieldInvalid('consumerName') }"
+                     placeholder="Enter customer name">
+              <div class="invalid-feedback" *ngIf="isFieldInvalid('consumerName')">
+                Customer name is required and must be at least 3 characters.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="consumerEmail" class="form-label">Email Address</label>
+              <input id="consumerEmail" type="email" formControlName="consumerEmail" 
+                     class="form-control"
+                     [ngClass]="{ 'is-invalid': isFieldInvalid('consumerEmail') }"
+                     placeholder="Enter email address">
+              <div class="invalid-feedback" *ngIf="isFieldInvalid('consumerEmail')">
+                Please enter a valid email address.
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="consumerAddress" class="form-label">Address</label>
+              <textarea id="consumerAddress" formControlName="consumerAddress" 
+                        class="form-control" rows="3"
+                        [ngClass]="{ 'is-invalid': isFieldInvalid('consumerAddress') }"
+                        placeholder="Enter customer address"></textarea>
+              <div class="invalid-feedback" *ngIf="isFieldInvalid('consumerAddress')">
+                Address is required.
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label for="installationStatus" class="form-label">Installation Status</label>
+              <select id="installationStatus" formControlName="installationStatus" 
+                      class="form-select"
+                      [ngClass]="{ 'is-invalid': isFieldInvalid('installationStatus') }">
+                <option value="">Select status</option>
+                <option value="In Progress">In Progress</option>
+                <option value="Completed">Completed</option>
+                <option value="Cancelled">Cancelled</option>
+              </select>
+              <div class="invalid-feedback" *ngIf="isFieldInvalid('installationStatus')">
+                Please select installation status.
+              </div>
+            </div>
+
+            <div class="d-flex justify-content-between">
+              <button type="button" class="btn btn-outline-secondary" 
+                      (click)="onCancel()">
+                <i class="bi bi-x-circle me-2"></i>Cancel
+              </button>
+              <button type="submit" class="btn btn-primary" 
+                      [disabled]="visitorForm.invalid || isSubmitting">
+                <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-2" role="status"></span>
+                <i *ngIf="!isSubmitting" class="bi bi-check-circle me-2"></i>
+                {{ isEditMode ? 'Update Customer' : 'Add Customer' }}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
