@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Visitor } from '../../model/visitor';
 import { VisitorService } from 'src/app/services/visitor.service';
+import { DashboardService } from 'src/app/services/dashboard.service';
 
 @Component({
   selector: 'app-visitor-form',
@@ -18,6 +19,7 @@ export class VisitorFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private visitorService: VisitorService,
+    private dashboardService: DashboardService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -69,7 +71,7 @@ export class VisitorFormComponent implements OnInit {
     const visitor: Visitor = this.visitorForm.value;
 
     if (this.isEditMode) {
-      this.visitorService.updateVisitor(this.visitorId, visitor.installationStatus).subscribe(() => {
+      this.dashboardService.updateVisitor(this.visitorId, visitor.installationStatus).subscribe(() => {
         alert('Visitor updated!');
         this.isSubmitting = false;
         this.router.navigate(['/']);

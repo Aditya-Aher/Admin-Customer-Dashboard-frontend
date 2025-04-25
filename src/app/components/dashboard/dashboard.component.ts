@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { VisitorService } from 'src/app/services/visitor.service';
+import { DashboardService } from 'src/app/services/dashboard.service';
 import { Visitor } from '../../model/visitor';
 
 @Component({
@@ -19,7 +20,11 @@ export class DashboardComponent implements OnInit {
   totalItems = 0;
   totalPages = 1;
 
-  constructor(private visitorService: VisitorService, private router: Router) {}
+  constructor(
+    private dashboardService: DashboardService,
+    private visitorService: VisitorService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.getAllVisitors();
@@ -84,9 +89,9 @@ export class DashboardComponent implements OnInit {
 
   deleteVisitor(id: number): void {
     if (confirm('Are you sure to delete this visitor?')) {
-      this.visitorService.deleteVisitor(id).subscribe({
+      this.dashboardService.deleteVisitor(id).subscribe({
         next: () => this.getAllVisitors(),
-        error: (err) => console.error(err)
+        error: (err: any) => console.error(err)
       });
     }
   }
